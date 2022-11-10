@@ -1,0 +1,18 @@
+nav {
+  background-color: rgb(41, 93, 171);
+  color: #fff;
+  margin-bottom: 100px;
+  .nav-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    width: 100%;
+
+
+    .nav-item{
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+  }
+}

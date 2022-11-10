@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "customer": "John Doe",
+        "sendingAt": "08/01/2019",
+        "status": "sent",
+        "amount": "1000"
+    },
+    {
+        "id": 2,
+        "customer": "Jane Doe",
+        "sendingAt": "08/01/2019",
+        "status": "paid",
+        "amount": "1000"
+    },
+    {
+        "id": 3,
+        "customer": "Jean Doe",
+        "sendingAt": "08/01/2019",
+        "status": "cancel",
+        "amount": "1000"
+    }
+]
