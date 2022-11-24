@@ -1,0 +1,9 @@
+form {
+    .column {
+        input {
+            &::placeholder {
+                color: black;
+            }
+        }
+    }
+}

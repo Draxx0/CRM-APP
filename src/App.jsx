@@ -6,15 +6,23 @@ import PrimaryRoutes from "./routes/PrimaryRoutes";
 
 function App() {
   const [invoices, setInvoices] = useState([]);
+  const [clients, setClients] = useState([]);
 
   useEffect(() => {
     fetchInvoices();
+    fetchClients();
   }, []);
 
   const fetchInvoices = () => {
-    fetch("./data/invoices.json")
+    fetch("http://localhost:8000/api/invoices")
       .then((response) => response.json())
       .then((data) => setInvoices(data));
+  };
+
+  const fetchClients = () => {
+    fetch("http://localhost:8000/api/customers")
+      .then((response) => response.json())
+      .then((data) => setClients(data));
   };
 
   return (
@@ -25,6 +33,9 @@ function App() {
           invoices={invoices}
           setInvoices={setInvoices}
           fetchInvoices={fetchInvoices}
+          clients={clients}
+          setClients={setClients}
+          fetchClients={fetchClients}
         />
       </BrowserRouter>
     </div>

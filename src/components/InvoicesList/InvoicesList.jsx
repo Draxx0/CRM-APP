@@ -9,6 +9,7 @@ const paidStyle = {
   display: "flex",
   justifyContent: "center",
   margin: "auto",
+  color: "white",
 };
 
 const sentStyle = {
@@ -18,6 +19,7 @@ const sentStyle = {
   display: "flex",
   justifyContent: "center",
   margin: "auto",
+  color: "white",
 };
 
 const cancelStyle = {
@@ -27,70 +29,82 @@ const cancelStyle = {
   display: "flex",
   justifyContent: "center",
   margin: "auto",
+  color: "white",
 };
 
-const InvoicesList = ({ invoices, setInvoices, fetchInvoices }) => {
-  const handleDelete = (index) => {
-    const newInvoices = invoices.filter((invoice, i) => i !== index);
-    toast.success("Facture supprimée avec succès");
-    setInvoices(newInvoices);
+const InvoicesList = ({ invoices, fetchInvoices, fetchClients }) => {
+  const handleDelete = (id) => {
+    console.log(id);
+    fetch(`http://localhost:8000/api/invoices/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then(() => {
+        toast.success("Facture supprimée avec succès");
+        fetchInvoices();
+        fetchClients();
+      });
   };
 
-  const handleClick = (index) => {
-    navigate(`/update/${index}`);
+  const handleClick = (id) => {
+    navigate(`/update-invoice/${id}`);
   };
 
   const navigate = useNavigate();
   return (
     <>
-      <table className="tg">
-        <thead>
-          <tr>
-            <th className="tg-0lax">Numéro</th>
-            <th className="tg-0lax">Client</th>
-            <th className="tg-0lax">Date d'envoi</th>
-            <th className="tg-0lax">Statut</th>
-            <th className="tg-0lax">Montant</th>
-            <th className="tg-0lax"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {invoices.map((invoice, index) => {
-            return (
-              <tr key={invoice.id} className="tr-line">
-                <td className="tg-0lax">{invoice.id}</td>
-                <td className="tg-0lax">{invoice.customer}</td>
-                <td className="tg-0lax">{invoice.sendingAt}</td>
-                <td
-                  className="tg-0lax"
-                  style={
-                    invoice.status === "paid"
-                      ? paidStyle
-                      : invoice.status === "sent"
-                      ? sentStyle
-                      : invoice.status === "cancel"
-                      ? cancelStyle
-                      : null
-                  }
-                >
-                  {invoice.status}
-                </td>
-                <td className="tg-0lax">{invoice.amount}€</td>
-
-                <td className="row td-button">
-                  <button onClick={() => handleClick(index)}>Modifier</button>
-                  <button
-                    className="invoices-delete"
-                    onClick={() => handleDelete(index)}
+      {invoices.length === 0 ? (
+        "Il n'y a pas de factures"
+      ) : (
+        <table className="tg">
+          <thead>
+            <tr>
+              <th className="tg-0lax">Id de la facture</th>
+              <th className="tg-0lax">Client</th>
+              <th className="tg-0lax">Date d'envoi</th>
+              <th className="tg-0lax">Statut</th>
+              <th className="tg-0lax">Montant</th>
+              <th className="tg-0lax">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {invoices.map((invoice) => {
+              return (
+                <tr key={invoice._id} className="tr-line">
+                  <td className="tg-0lax">{invoice._id}</td>
+                  <td className="tg-0lax">{invoice.customer}</td>
+                  <td className="tg-0lax">{invoice.createdAt}</td>
+                  <td
+                    className="tg-0lax"
+                    style={
+                      invoice.status === "paid"
+                        ? paidStyle
+                        : invoice.status === "send"
+                        ? sentStyle
+                        : invoice.status === "cancel"
+                        ? cancelStyle
+                        : null
+                    }
                   >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                    {invoice.status}
+                  </td>
+                  <td className="tg-0lax">{invoice.amount}€</td>
+
+                  <td className="row td-button">
+                    <button onClick={() => handleClick(invoice._id)}>Modifier</button>
+                    <button
+                      className="invoices-delete"
+                      onClick={() => handleDelete(invoice._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
       <ToastContainer />
     </>
   );

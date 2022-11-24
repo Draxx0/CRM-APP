@@ -2,22 +2,22 @@
     {
         "id": 1,
         "customer": "John Doe",
-        "sendingAt": "08/01/2019",
-        "status": "sent",
+        "sendingAt": "2019-01-19",
+        "status": "Envoyé",
         "amount": "1000"
     },
     {
         "id": 2,
         "customer": "Jane Doe",
-        "sendingAt": "08/01/2019",
-        "status": "paid",
+        "sendingAt": "2019-01-19",
+        "status": "Payé",
         "amount": "1000"
     },
     {
         "id": 3,
         "customer": "Jean Doe",
-        "sendingAt": "08/01/2019",
-        "status": "cancel",
+        "sendingAt": "2019-01-19",
+        "status": "Annulé",
         "amount": "1000"
     }
 ]

@@ -1,0 +1,9 @@
+.client-invoice-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    li {
+        padding: 0 !important;
+    }
+}
